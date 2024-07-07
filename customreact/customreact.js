@@ -12,10 +12,28 @@ const reactElement = {
         href:'https://google.com',
         target:'_blank',
     },
-    children:'click me to visit google'
+    children:'click me to visit google hhh'
 }
 
 
+
+
+function myCustomReact(myReactElement,container){
+    const p = document.createElement(myReactElement.type);
+    p.innerHTML = myReactElement.children;
+    p.setAttribute('id',myReactElement.props.id)
+    container.appendChild(p)
+}
+
+const myReactElement ={
+    type:'p',
+    props:{
+        id:"pid"
+    },
+    children:"hello this is custom p tag"
+}
+
 const mainContainer = document.querySelector('#root');
 customRender(reactElement,mainContainer)
+myCustomReact(myReactElement,mainContainer)
 
