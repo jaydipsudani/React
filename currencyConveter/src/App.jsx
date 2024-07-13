@@ -1,37 +1,73 @@
+import { useState } from "react";
+import { InputBox } from "./components";
+import useCurrenyInfo from "./hooks/useCurrencyinfo";
+
+
 export default function App() {
+  const [amount,setAmount] = useState(0);
+  const [from,setFrom] = useState("usd")
+  const [to,setTo] = useState('inr')
+  const [convertedAmount,setConvertedAmount]= useState(0)
+  const currencyInfo = useCurrenyInfo(from)
+  const options = Object.keys(currencyInfo)
+  const swap = ()=>{
+    setFrom(to)
+    setTo(from)
+    setConvertedAmount(amount)
+    setAmount(convertedAmount)
+  }
+  const convert = ()=>{
+  setConvertedAmount(amount * currencyInfo[to] )
+  }
   return (
-    <>
-      <h1 className="flex text-3xl font-bold underline justify-center  bg-yellow-300 h-full w-full center">
-        Hello world!
-      </h1>
-      <div class="flex">
-        <div class="flex-none w-14 bg-red-50">01 flex-none</div>
-        <div class="flex-initial w-64 bg-green-100">02 flex-initial w-64</div>
-        <div class="flex-initial w-32 bg-green-400">03 flex-initial w-32</div>
-      </div>
-      <div class="flex">
-        <div class="flex-1 w-14 bg-red-500">01 flex-1 w-14</div>
-        <div class="flex-1 w-64 bg-green-100">02 class="flex-1 w-64</div>
-        <div class="flex-1 w-32 bg-green-400">03 flex-1 w-32</div>
-      </div>
-      <div class="flex ...">
-        <div class="flex-none w-14 bg-green-50 ...">01 flex-none w-14</div>
-        <div class="flex-auto w-64 bg-green-100 ...">02 flex-auto w-64</div>
-        <div class="flex-auto w-32 bg-green-400 ...">03 flex-auto w-32</div>
-      </div>
-
-      <div class="flex ...">
-        <div class="flex-initial w-64">Logo</div>
-        <div class="flex-auto bg-green-100">Header</div>
-        <div class="flex-initial will-change-scroll bg-green-400">Login/logout</div>
-      </div>
-
-      <div className="flex">
-        <div className="bg-red-400 flex-initial w-64 h-96">1</div>
-        <div className="bg-green-300 flex-auto w-64">2</div>
-      </div>
-      <div class="basis-1/3 hover:basis-1/2">hover
+    <div
+    className="w-full h-screen flex flex-wrap justify-center items-center bg-cover bg-no-repeat"
+    style={{
+        backgroundImage: `url('https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg')`,
+    }}
+>
+    <div className="w-full">
+        <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    convert()
+                }}
+            >
+                <div className="w-full mb-1">
+                    <InputBox
+                        label="From"
+                        amount={amount}
+                        currencyOptions={options}
+                        onCurrencyChange={(currency) => setAmount(amount)}
+                          selectCurreny={from}
+                    />
+                </div>
+                <div className="relative w-full h-0.5">
+                    <button
+                        type="button"
+                        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white rounded-md bg-blue-600 text-white px-2 py-0.5"
+                        onClick={swap}
+                    >
+                        swap
+                    </button>
+                </div>
+                <div className="w-full mt-1 mb-4">
+                    <InputBox
+                        label="To"
+                        amount={convertedAmount}
+                        currencyOptions={options}
+                        onCurrencyChange={(currency)=>setTo(currency)}
+                          selectCurreny={from}
+                          amountDisable
+                    />
+                </div>
+                <button type="submit" className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg">
+                    Convert {from.toUpperCase()} to {to.toUpperCase()}
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
-    </>
   );
 }
