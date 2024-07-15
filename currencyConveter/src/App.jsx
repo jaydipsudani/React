@@ -40,7 +40,9 @@ export default function App() {
                         amount={amount}
                         currencyOptions={options}
                         onCurrencyChange={(currency) => setAmount(amount)}
+                        onChange={(e) => {setFrom(e.target.value) }}
                           selectCurreny={from}
+                          onAmountChange={(amount) => setAmount(amount)}
                     />
                 </div>
                 <div className="relative w-full h-0.5">
