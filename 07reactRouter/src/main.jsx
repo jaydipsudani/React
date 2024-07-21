@@ -2,9 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Home from './Home.jsx'
-import Contact from './Componets/Contact/Contact.jsx'
-import About from './Componets/About/About.jsx'
-import User from './Componets/User/User.jsx'
+import {About,Contact,User} from './index.jsx'
+
+//import About from './Componets/About/About.jsx'
+
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import Layout from './Layout.jsx'
