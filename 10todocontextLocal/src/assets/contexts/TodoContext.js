@@ -1,11 +1,11 @@
 import { createContext,useContext } from "react";
 
 const TodoContext = createContext({
-    todos:{
+    todos:[{
         id:1,
         title:"Hello",
         completed:false
-    },
+    }],
     //addTodo:(todo) =>{},
     //removeTodo:(id) =>{},
     //toggleTodo:(id) =>{},
