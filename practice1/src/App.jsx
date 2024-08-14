@@ -1,50 +1,35 @@
-import { useState, createContext, useContext } from "react";
-import { AutoColor } from "./components/AutoColor";
+import { useForm } from "react-hook-form"
 
-//import './App.css'
-import Button from "./components/Button";
-const ColorContext = createContext();
-function App() {
-  const [color, setColor] = useState("yellow");
 
-  //const colors = ['LightSeaGreen', 'CadetBlue', 'BurlyWood', 'DarkGoldenRod', 'DarkOrange', 'DeepPink']
+export default function App() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+
+  const onSubmit = (data) => console.log(data)
+
+
+  console.log(watch("example")) // watch input value by passing the name of it
+
 
   return (
-    <>
-      <ColorContext.Provider value={{ color, setColor }}>
-        <div
-          className="w-full h-screen duration-200"
-          style={{ backgroundColor: color }}
-        >
-          <div className=" fixed flex flex-wrap justify-center bottom-12 inset-x-0 px-20  ">
-            <Button colors="LightSeaGreen" />
-            <Button colors="CadetBlue" />
-            <Button colors="BurlyWood" />
-            <Button colors="DarkGoldenRod" />
-            <Button colors="DarkOrange" />
-            <Button colors="DeepPink" />
-            <AutoColor />
-          </div>
-        </div>
-      </ColorContext.Provider>
-    </>
-  );
+    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* register your input into the hook by invoking the "register" function */}
+      <input defaultValue="test" {...register("example")} />
+
+
+      {/* include validation with required or other standard HTML validation rules */}
+      <input {...register("exampleRequired", { required: true })} />
+      {/* errors will return when field validation fails  */}
+      {errors.exampleRequired && <span>This field is required</span>}
+
+
+      <input type="submit" />
+    </form>
+  )
 }
-
-//   return (
-//    <div className='w-full h-screen duration-200' style={{backgroundColor:color}}>
-//   <div className=' fixed flex flex-wrap justify-center bottom-12 inset-x-0 px-20  '>
-//    <MyButton  on={handleClick} colors="LightSeaGreen" />
-//    <MyButton  on={handleClick} colors="CadetBlue" />
-//    <MyButton  on={handleClick} colors="BurlyWood" />
-//    <MyButton  on={handleClick} colors="DarkGoldenRod" />
-//    <MyButton  on={handleClick} colors="DarkOrange" />
-//    <MyButton  on={handleClick} colors="DeepPink" />
-//   </div>
-//    </div>
-//   )
-// }
-
-export default App;
-
-export { ColorContext };
