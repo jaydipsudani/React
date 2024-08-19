@@ -63,6 +63,14 @@ const router = createBrowserRouter(
   )
 )
 
+const r = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}  > 
+      <Route path="about" element={<About/>} />
+    </Route>
+  )
+)
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
