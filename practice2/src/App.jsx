@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {useContext, useState } from "react"
+import useUser, { ThemeProvider, userContext } from "./Context/User";
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
+ 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider>
+    <Login2 />
+    {user&& <Profile2 />}
+    </ThemeProvider> 
   )
+}
+
+function Login2()
+{
+  const [username, setusername] = useState('')
+  const {setUser} = useUser();
+  const handleSubmit = ()=>{
+
+    setUser(username)
+  }
+  return(
+    <>
+  <input type="text" value={username} onChange={(e)=>setusername(e.target.value)} className="w-50 bg-green-400" />
+  <button onClick={handleSubmit}>submit</button></>
+  )
+}
+
+function Profile2()
+{
+  const {user} = useUser()
+    return (
+      <>
+      <div>Welcome {user} </div>
+      </>
+    )
 }
 
 export default App
